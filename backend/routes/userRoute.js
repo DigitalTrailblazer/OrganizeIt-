@@ -1,6 +1,7 @@
 import express from 'express'
-import { getCurrentUser, login, registerUser, updatePassword, updateUserProfile } from '../controllers/userController';
-import { useReducer } from 'react';
+import { getCurrentUser, login, registerUser, updatePassword, updateUserProfile } from '../controllers/userController.js';
+import authMiddleware from "../middlewares/auth.js";
+
 
 const userRouter = express.Router();
 
@@ -11,6 +12,9 @@ userRouter.post("/login", login)
 
 
 // PRIVATE ROUTES
-userRouter.get("/me", getCurrentUser)
-userRouter.put("/profile", updateUserProfile)
-userRouter.put("/password", updatePassword)
+userRouter.get("/me", authMiddleware, getCurrentUser)
+userRouter.put("/profile", authMiddleware, updateUserProfile)
+userRouter.put("/password", authMiddleware, updatePassword)
+
+
+export default userRouter

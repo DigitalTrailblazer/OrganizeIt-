@@ -2,7 +2,6 @@ import User from "../models/userModel.js";
 import validator from "validator"
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs"
-import { use } from "react";
 
 
 // REGISTER
@@ -47,7 +46,6 @@ export async function registerUser(req, res) {
             password : hashed
         })
 
-        // const token = createToken(user._id)
         const payload = {
             id : user._id,
             email : user.email
@@ -105,6 +103,7 @@ export async function login(req, res){
             })
         }
 
+        // set token in cookie
         const payload = {
             id : user._id,
             email : user.email
@@ -117,6 +116,7 @@ export async function login(req, res){
         }
         res.cookie("token", token, options)
 
+        // sends to local storage also
         res.status(201).json({
             success : true,
             message : "user logged in successfully !",
@@ -151,6 +151,7 @@ export async function getCurrentUser(req, res){
             })
         }
 
+        // send user data
         res.json({
             success : true,
             user : user 
@@ -232,7 +233,7 @@ export async function updatePassword(req, res){
     }
 
     try{
-
+        // check for user existance
         const user = await User.findById(req.user.id).select("password")
         if(!user){
             return res.status(400).json({

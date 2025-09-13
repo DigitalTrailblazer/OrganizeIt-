@@ -1,10 +1,10 @@
 import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChevronDown, CircleCheckBig, Settings } from 'lucide-react';
+import { ChevronDown, CircleCheckBig, LogOut, Settings } from 'lucide-react';
 import { useState } from "react";
 
 
-const Navbar = () => {
+const Navbar = ({user = {}, onLogout}) => {
 
     const navigate = useNavigate()
     const menuref = useRef(null)
@@ -12,6 +12,11 @@ const Navbar = () => {
 
     const handleMenuToggle = () => {
         setmenuOpen((prev) => !prev)
+    }
+
+    const handleLogout = () => {
+        setmenuOpen(false)
+        onLogout()   
     }
 
     return (
@@ -51,8 +56,8 @@ const Navbar = () => {
                         >
                             <div className='relative'>
                                 {
-                                    User.avatar ? (
-                                        <img src={User.avatar} alt="avatar" className='w-9 h-9 rounded-full shadow-sm' />
+                                    user.avatar ? (
+                                        <img src={user.avatar} alt="avatar" className='w-9 h-9 rounded-full shadow-sm' />
                                     ) : (
                                         <div className='w-8 h-8 flex items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 to-purple-500 text-white font-semibold shadow-md'>
                                             {
@@ -69,9 +74,39 @@ const Navbar = () => {
                                 <p className='text-xs font-normal text-gray-500'>{user.email}</p>
                             </div>
 
-                            <ChevronDown className={`w-4 h-4 `} />
+                            <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${menuOpen ? 'rotate-180' : ''}`} />
                             {/* 1:39:21 */}
                         </button>
+
+                        {
+                            menuOpen && (
+                                <ul className='absolute top-13 right-0 w-56 bg-white rounded-2xl shadow-xl border border-purple-100 z-50 overflow-hidden animate-fadeIn'>
+
+                                    <li className='p-2'>
+                                        <button  
+                                            onClick={() => {
+                                                setmenuOpen(false)
+                                                navigate('/profile')
+                                            }}
+                                            className='w-full px-4 py-2.5 text-left hover:bg-purple-50 text-sm text-gray-700 transition-colors  flex items-center gap-2' role='menuitem'
+                                        >
+                                            <Settings className='w-4 h-4 text-gray-700' />
+                                            Profile Setting 
+                                        </button>
+                                    </li>
+
+                                    <li className='p-2'>
+                                        <button
+                                            onClick={handleLogout}
+                                            className='flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-red-50 text-red-600'
+                                        >
+                                            <LogOut className='w-4 h-4' />
+                                            Logout
+                                        </button>
+                                    </li>
+                                </ul>
+                            )
+                        }
                     </div>
                 </div>
             </div>

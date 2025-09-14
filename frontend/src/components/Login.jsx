@@ -137,7 +137,7 @@ const Login = ({onSubmit, onSwitchMode}) => {
                   {isPassword && (
                     <button type='button'
                       onClick={() => setShowPassword((prev) => !prev)}
-                      className='ml-2 bg-gray-500 hover:text-purple-500 transition-colors'
+                      className='ml-2 hover:text-purple-500 transition-colors'
                     >
                       {showPassword ? <EyeOff className='w-5 h-5 bg-transparent' /> : <Eye className='w-5 h-5 bg-transparent' />}
                     </button>

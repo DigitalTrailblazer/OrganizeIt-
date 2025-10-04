@@ -207,7 +207,7 @@ export async function updateUserProfile(req, res){
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully !",
-            user: updatedUser
+            user
         })
     } 
     catch (error) {
@@ -252,7 +252,7 @@ export async function updatePassword(req, res){
         }
 
         // password matched, now hash new password and update
-        user.password = bcrypt.hash(newPassword, 10)
+        user.password = await bcrypt.hash(newPassword, 10)
         await user.save()
 
         res.status(200).json({

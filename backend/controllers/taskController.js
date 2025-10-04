@@ -12,6 +12,14 @@ export const createTask = async (req, res) => {
              completed
             } = req.body
 
+        // console.log("Creating task with data:", req.body); 
+        if (!title || title.trim() === '') {
+            return res.status(400).json({
+                success: false,
+                message: "Title is required"
+            })
+        }  
+
         const newTask = new Task({
             title, 
             description,

@@ -26,7 +26,6 @@ const Login = ({onSubmit, onSwitchMode}) => {
     const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState(INITIAL_FORM)
     const [showPassword, setShowPassword] = useState(false)
-    const [rememberMe, setRememberMe] = useState(false)
 
 
     useEffect(() => { 
@@ -61,11 +60,6 @@ const Login = ({onSubmit, onSwitchMode}) => {
 
     const handleSubmit = async e => {
       e.preventDefault()
-
-      if(!rememberMe){
-        toast.error('Enable "Rememeber Me" to login.')
-        return
-      }
       setLoading(true)
 
       try {
@@ -145,13 +139,6 @@ const Login = ({onSubmit, onSwitchMode}) => {
                 </div>
               </>
             ))}
-
-            <div className='flex items-center'> 
-              <input type="checkbox" id='rememberMe' required checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} 
-              className='h-4 w-4 text-purple-500 focus:ring-purple-400 border-gray-300 rounded'/>
-
-              <label htmlFor="rememberMe" className='ml-2 block text-sm text-gray-700'>Remember Me</label>
-            </div>
 
             <button
               type='submit'

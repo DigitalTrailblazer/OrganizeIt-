@@ -28,7 +28,9 @@ const Layout = ({user, onLogout}) => {
 
       const arr = Array.isArray(data) ? data : 
         Array.isArray(data?.tasks) ? data.tasks :
-          Array.isArray(data?.data) ? data.data : []
+        Array.isArray(data?.data) ? data.data : []
+
+        setTasks(arr)
     }
     catch(err){
       console.error(err)

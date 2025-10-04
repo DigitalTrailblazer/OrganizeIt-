@@ -79,6 +79,8 @@ const Dashboard = () => {
 
 
   // filter tasks
+  console.log("All tasks:", tasks);
+
   const filteredTasks = useMemo(() => tasks.filter(task => {
 
     const dueDate = new Date(task.dueDate)
@@ -104,25 +106,35 @@ const Dashboard = () => {
     }
 
   }), [tasks, filter])
+  
 
 
   // save tasks
-  const handleTaskSave = useCallback(async (taskData) => {
-    try {
+const handleTaskSave = useCallback(async (taskData) => {
+  try {
 
-      if(taskData.id){
-        await axios.put(`${API_URL}/${taskData.id}/taskss`, taskData)
-        
-        refreshTasks()
-        setShowModel(false)
-        setSelectedTask(null)
-      }
-      
-    } 
-    catch (error) {
-      console.error("Error saving tasks :", error)
+    const token = localStorage.getItem("token")  // get token
+    if (!token) throw new Error("No auth token found")
+
+    const headers = { Authorization: `Bearer ${token}` }
+
+    if (taskData.id) {
+      await axios.put(`${API_URL}/${taskData.id}/taskss`, taskData, { headers })  // send headers
+    } else {
+      await axios.post(`${API_URL}/taskss`, taskData, { headers })  // for new tasks
     }
-  }, [refreshTasks])
+
+    refreshTasks()   // refresh tasks after save
+    setShowModel(false)
+    setSelectedTask(null)
+  } 
+  catch (error) {
+    console.error("Error saving tasks:", error)
+  }
+}, [refreshTasks])
+
+  console.log("Filtered tasks:", filteredTasks);
+
 
 
   return (
@@ -258,9 +270,10 @@ const Dashboard = () => {
       {/* task add model */}
       <TaskModel 
         isOpen={showModel || !!selectdTask} 
-        onClose = {() => {setShowModel(false); setSelectedTask(null);}}
         taskToEdit = {selectdTask}
+        onClose = {() => {setShowModel(false); setSelectedTask(null);}}
         onSave = {handleTaskSave}
+        // onRefresh = {refreshTasks}
       />
     </div>
   );

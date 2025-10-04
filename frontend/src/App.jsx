@@ -8,6 +8,8 @@ import Pendingpage from './pages/Pendingpage'
 import CompletePage from './pages/CompletePage'
 import Profile from './components/Profile'
 
+const API_URL = "http://localhost:1111/api/tasks" // ✅ ADDED
+
 function App() {
   const navigate = useNavigate()
   const [currentUser, setCurrentUser] = useState(() => {
@@ -40,12 +42,40 @@ function App() {
     navigate('/login', { replace: true })
   }
 
-  // ✅ Layout will wrap all protected routes
-  const ProtectedLayout = () => (
-    <Layout user={currentUser} onLogout={handleLogout}>
-      <Outlet /> {/* Renders the children routes */}
-    </Layout>
-  )
+  // ProtectedLayout with tasks & refreshTasks
+  const ProtectedLayout = () => {
+    const [tasks, setTasks] = useState([])
+
+    const refreshTasks = async () => { 
+      const token = localStorage.getItem("token")
+      if (!token) return
+
+      try {
+        const res = await fetch(`${API_URL}/taskss`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        const data = await res.json()
+        if (data.success) {
+          setTasks(data.tasks)
+        } else {
+          setTasks([])
+          console.error("Failed to fetch tasks:", data.message)
+        }
+      } catch (err) {
+        console.error("Error fetching tasks:", err)
+      }
+    }
+
+    useEffect(() => {
+      refreshTasks() // fetch tasks on mount
+    }, [])
+
+    return (
+      <Layout user={currentUser} onLogout={handleLogout}>
+        <Outlet context={{ tasks, refreshTasks }} /> 
+      </Layout>
+    )
+  }
 
   return (
     <Routes>
@@ -73,7 +103,6 @@ function App() {
         <Route path='/pending' element={<Pendingpage />} />
         <Route path='/complete' element={<CompletePage />} />
         <Route path='/profile' element={<Profile user={currentUser} setCurrentUser={setCurrentUser} onLogout={handleLogout} />} />
-
       </Route>
 
       <Route path='*' element={<Navigate to={currentUser ? '/' : '/login'} replace />} />

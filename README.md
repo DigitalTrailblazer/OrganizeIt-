@@ -4,6 +4,13 @@ OrganizeIt is a modern, responsive **Task Manager Application** that helps users
 It combines clean UI design, smooth interactions, and robust backend APIs to deliver a distraction-free productivity experience.
 
 ---
+## 📊 Dashboard Preview
+
+A glimpse of the clean and minimal dashboard interface — designed for clarity and productivity.
+
+![Dashboard Screenshot](./src/assets/dashboard.png)
+
+---
 
 ##  Features
 

@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronDown, CircleCheckBig, LogOut, Settings } from 'lucide-react';
 import { useState } from "react";
+import { useEffect } from 'react';
 
 
 const Navbar = ({user = {}, onLogout}) => {
@@ -9,6 +10,20 @@ const Navbar = ({user = {}, onLogout}) => {
     const navigate = useNavigate()
     const menuref = useRef(null)
     const [menuOpen, setmenuOpen] = useState(false)
+
+    useEffect(() => {
+        const handleClickOutsideBar = (e) => {
+            if(menuref.current && !menuref.current.contains(e.target)){
+                setmenuOpen(false)
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutsideBar)
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutsideBar)
+        }
+    })
 
     const handleMenuToggle = () => {
         setmenuOpen((prev) => !prev)
@@ -31,7 +46,6 @@ const Navbar = ({user = {}, onLogout}) => {
                     {/* logo container */}
                     <div className='relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500 via-purple-500 to-indigo-500 shadow-lg group-hover:shadow-purple-300/50 group-hover:scale-105 transition-all duration-300'>
                         <CircleCheckBig className='w-6 g-6 text-white'/>
-                        <div className='absolute -bottom-1 -middle-1 w-3 h-3 bg-white rounded-full shadow-md animate-ping' />
                     </div>
 
                     {/* brand name */}

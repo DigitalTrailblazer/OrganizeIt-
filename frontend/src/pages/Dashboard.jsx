@@ -261,7 +261,7 @@ const handleTaskSave = useCallback(async (taskData) => {
         {/* add task destop version view */}
         <div className="hidden md:flex items-center justify-center p-4 border-2 border-dashed border-purple-200 rounded-xl hover:border-purple-400 bg-purple-50 cursor-pointer transition-colors">
           <Plus className="w-5 h-5 mr-2 text-purple-500" />
-          <span className="text-gray-600 font-medium">
+          <span onClick={() => setShowModel(true)} className="text-gray-600 font-medium">
             Add new Task
           </span>
         </div>

@@ -22,7 +22,7 @@ const Layout = ({user, onLogout}) => {
         throw new Error("No authorization token found")
       }
 
-      const {data} = await axios.get("http://localhost:1111/api/tasks/taskss", {
+      const {data} = await axios.get("https://organizeit-backend-ifkw.onrender.com/api/tasks/taskss", {
         headers : { Authorization : `Bearer ${token}`}
       })
 

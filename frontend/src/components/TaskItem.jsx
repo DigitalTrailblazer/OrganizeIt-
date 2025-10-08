@@ -6,7 +6,7 @@ import TaskModel from "./TaskModel";
 
 
 
-const API_URL = "http://localhost:1111/api/tasks";
+const API_URL = "https://organizeit-backend-ifkw.onrender.com/api/tasks";
 
 const menu_options = [
   { action: "edit", label: "Edit Task", icon: <Edit2 size={14} className="text-purple-600" /> },

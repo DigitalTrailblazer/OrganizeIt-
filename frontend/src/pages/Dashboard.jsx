@@ -6,7 +6,7 @@ import axios from 'axios'
 import TaskModel from "../components/TaskModel";
 
 
-const API_URL = "http://localhost:1111/api/tasks";
+const API_URL = "https://organizeit-backend-ifkw.onrender.com/api/tasks";
 
 const STATS = [
   {

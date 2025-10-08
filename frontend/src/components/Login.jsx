@@ -20,7 +20,7 @@ import axios from "axios";
 
 const Login = ({onSubmit, onSwitchMode}) => {
 
-    const API_URL = "http://localhost:1111"
+    const API_URL = "https://organizeit-backend-ifkw.onrender.com"
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)

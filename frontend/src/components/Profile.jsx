@@ -15,7 +15,7 @@ const securityFields = [
     { name: "confirm", placeholder: "Confirm Password" },
 ];
 
-const API_URL = "http://localhost:1111"
+const API_URL = "https://organizeit-backend-ifkw.onrender.com"
 
 const Profile = ({ setCurrentUser, onLogout }) => {
   const navigate = useNavigate()

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 
-  const API_URL = "http://localhost:1111"
+  const API_URL = "https://organizeit-backend-ifkw.onrender.com"
   const INITIAL_FORM = {
     name : "",
     email : "",

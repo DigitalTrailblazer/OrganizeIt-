@@ -8,7 +8,7 @@ import Pendingpage from './pages/Pendingpage'
 import CompletePage from './pages/CompletePage'
 import Profile from './components/Profile'
 
-const API_URL = "http://localhost:1111/api/tasks" // ✅ ADDED
+const API_URL = "https://organizeit-backend-ifkw.onrender.com/api/tasks" 
 
 function App() {
   const navigate = useNavigate()
